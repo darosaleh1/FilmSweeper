@@ -15,5 +15,8 @@ public class Language {
     @Column(name = "language_id")
     private Byte id;
 
+    @Column(name = "name")
+    private String name;
+
 
 }

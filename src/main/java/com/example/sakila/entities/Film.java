@@ -1,5 +1,11 @@
 package com.example.sakila.entities;
 
+import com.example.sakila.converters.RatingConverter;
+import com.example.sakila.converters.SpecialFeaturesConverter;
+import com.example.sakila.enums.Rating;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -7,6 +13,10 @@ import lombok.Setter;
 
 import java.sql.Timestamp;
 import java.time.Year;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -33,7 +43,7 @@ public class Film {
     private Year releaseYear;
 
     @ManyToOne
-    @Column(name= "language_id")
+    @JoinColumn(name= "language_id")
     private Language language;
 
     @Column(name= "original_language_id")
@@ -51,14 +61,27 @@ public class Film {
     @Column(name= "replacement_cost")
     private double replacementCost;
 
+
     @Column(name= "rating")
-    private String rating;
+    @Convert(converter = RatingConverter.class)
+    private Rating rating;
 
     @Column(name= "special_features")
-    private String specialFeatures;
+    @Convert(converter = SpecialFeaturesConverter.class)
+    private Set<String> specialFeatures = new HashSet<>();
 
     @Column(name= "last_update")
     private Timestamp LastUpdate;
+
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "film_actor",
+            joinColumns = @JoinColumn(name="film_id"),
+            inverseJoinColumns = @JoinColumn(name="actor_id")
+    )
+    private List<Actor> cast = new ArrayList<>();
 
 
 }

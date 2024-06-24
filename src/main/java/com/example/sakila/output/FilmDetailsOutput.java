@@ -1,11 +1,15 @@
 package com.example.sakila.output;
 
+import com.example.sakila.entities.Actor;
 import com.example.sakila.entities.Film;
 import com.example.sakila.entities.Language;
+import com.example.sakila.enums.Rating;
 import lombok.Getter;
 
 import java.sql.Timestamp;
 import java.time.Year;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 public class FilmDetailsOutput {
@@ -19,9 +23,10 @@ public class FilmDetailsOutput {
     private double rentalRate;
     private Integer lengthInMinutes;
     private double replacementCost;
-    private String rating;
-    private String specialFeatures;
+    private Rating rating;
+    private Set<String> specialFeatures;
     private Timestamp lastUpdate;
+    private List<ActorReferenceOutput> cast;
 
     public FilmDetailsOutput(Film film) {
         this.id = film.getId();
@@ -37,5 +42,9 @@ public class FilmDetailsOutput {
         this.rating = film.getRating();
         this.specialFeatures = film.getSpecialFeatures();
         this.lastUpdate = film.getLastUpdate();
+        this.cast = film.getCast()
+                .stream()
+                .map(ActorReferenceOutput::new)
+                .toList();
     }
 }

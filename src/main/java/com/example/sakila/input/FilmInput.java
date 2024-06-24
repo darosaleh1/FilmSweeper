@@ -1,11 +1,13 @@
 package com.example.sakila.input;
 
+import com.example.sakila.enums.Rating;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.sql.Timestamp;
 import java.time.Year;
+import java.util.Set;
 
 @Data
 public class FilmInput {
@@ -38,9 +40,9 @@ public class FilmInput {
     @NotNull(groups = {ValidationGroup.Create.class})
     private double replacementCost;
 
-    private String rating;
+    private Rating rating;
 
-    private String specialFeatures;
+    private Set<String> specialFeatures;
 
     @NotNull(groups = {ValidationGroup.Create.class})
     private Timestamp lastUpdate;

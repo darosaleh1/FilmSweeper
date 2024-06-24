@@ -1,8 +1,11 @@
 package com.example.sakila.enums;
 
+import lombok.Getter;
+
 import java.util.HashMap;
 import java.util.Map;
 
+@Getter
 public enum Rating {
     G("G"),
     PG("PG"),
@@ -10,26 +13,14 @@ public enum Rating {
     R("R"),
     NC_17("NC-17");
 
-    public final String label;
 
-    private Rating(String label) {
-        this.label = label;
+    private final String rating;
+
+    private Rating(String rating) {
+        this.rating = rating;
     }
 
-    private static final Map<String, Rating> BY_LABEL = new HashMap<>();
-
-
-
-//    public static Rating valueOfRating(String label) {
-//        for (Rating r: values()) {
-//            if (r.label.equals(label)) {
-//                return r;
-//            }
-//        }
-//        return null;
-//    }
-
-
-
-
 }
+
+
+
